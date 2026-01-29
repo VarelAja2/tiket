@@ -112,9 +112,9 @@
 
                 <!-- Desktop Buttons -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="../../auth/login.blade.php"
+                    <a href="{{ route('login') }}"
                         class="px-4 py-2 rounded-lg border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300">Masuk</a>
-                    <a href="../../auth/register.blade.php"
+                    <a href="{{ route('register') }}"
                         class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors duration-300">Daftar</a>
                 </div>
 

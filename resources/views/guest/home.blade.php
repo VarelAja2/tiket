@@ -158,8 +158,8 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-3xl font-bold">Beli Tiket</h2>
-                <a href="#" class="text-red-500 hover:text-red-400 transition-colors duration-300 font-semibold">Lihat
-                    Semua →</a>
+                <a href="{{ route('now-playing') }}" class="text-red-500 hover:text-red-400 transition-colors duration-300 font-semibold">Lihat
+                    Semua</a>
 
             </div>
 
@@ -274,9 +274,9 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-3xl font-bold">Coming Soon</h2>
-                <a href="#"
+                <a href="{{ route('coming-soon') }}"
                     class="text-red-500 hover:text-red-400 transition-colors duration-300 font-semibold">Lihat
-                    Semua →</a>
+                    Semua</a>
             </div>
 
             <div class="horizontal-scroll flex space-x-6 pb-4">
