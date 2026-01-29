@@ -10,16 +10,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalUser = User::count();
-        $totalOrder = Order::count();
-        $orderPaid = Order::where('status', 'paid')->count();
-        $orderPending = Order::where('status', 'pending')->count();
+        $totalUser     = User::count();
+        $totalOrder    = Order::count();
+        $orderPaid     = Order::where('status', 'paid')->count();
+        $orderPending  = Order::where('status', 'pending')->count();
 
-        return view('admin.dashboard', [
-            'totalUser'    => User::count(),
-            'totalOrder'   => Order::count(),
-            'orderPaid'    => Order::where('status', 'paid')->count(),
-            'orderPending' => Order::where('status', 'pending')->count(),
-        ]);
+        return view('admin.dashboard', compact(
+            'totalUser',
+            'totalOrder',
+            'orderPaid',
+            'orderPending'
+        ));
     }
 }
