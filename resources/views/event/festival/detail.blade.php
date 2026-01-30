@@ -397,6 +397,7 @@
                         Beli Tiket Sekarang
                     </a>
 
+
                     <!-- Info Tambahan -->
                     <div class="border-t border-gray-700 pt-4 space-y-3">
                         <div class="flex items-center text-sm text-gray-400">

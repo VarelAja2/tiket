@@ -84,13 +84,10 @@
                     <div class="w-64 md:w-full max-w-xs rounded-xl overflow-hidden shadow-2xl shadow-red-900/30">
                         <div class="aspect-[2/3] bg-cover bg-center"
                             style="background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
-                            <div
-                                class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                KONSER
-                            </div>
-                            <div class="absolute bottom-4 right-4 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                                SOLD OUT
-                            </div>
+                            <a href="{{ route('now-playing') }}"
+                                class="absolute top-6 left-4 bg-red-600 text-white text-md font-bold px-3 py-1 rounded-full">
+                                Kembali
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -496,26 +493,10 @@
                     </div>
 
                     <!-- WAITLIST SECTION -->
-                    <div id="waitlist-section" class="border-t border-gray-700 pt-6">
-                        <h3 class="text-lg font-bold mb-4 text-white">Join Waitlist</h3>
-                        <p class="text-gray-300 text-sm mb-4">
-                            Masukkan email Anda untuk mendapatkan notifikasi jika ada tiket yang dibatalkan atau untuk
-                            konser selanjutnya.
-                        </p>
-
-                        <form class="space-y-3">
-                            <input type="email" placeholder="Email Anda"
-                                class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-600">
-
-                            <input type="number" placeholder="Jumlah tiket yang diinginkan"
-                                class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-600">
-
-                            <button type="submit"
-                                class="w-full py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors duration-300">
-                                Join Waitlist
-                            </button>
-                        </form>
-                    </div>
+                    <a href="{{ route('booking.seats', ['event_id' => $event_id ?? 'competition-event']) }}"
+                        class="block w-full py-3 bg-red-600 text-white text-center font-bold rounded-lg hover:bg-yellow-700 transition-colors duration-300 mb-4">
+                        Beli Tiket Sekarang
+                    </a>
 
                     <!-- Info Tambahan -->
                     <div class="mt-6 pt-6 border-t border-gray-700">

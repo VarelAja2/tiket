@@ -31,10 +31,10 @@
                     <div class="w-64 md:w-full max-w-xs rounded-xl overflow-hidden shadow-2xl shadow-green-900/30">
                         <div class="aspect-[2/3] bg-cover bg-center"
                             style="background-image: url('https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
-                            <div
-                                class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                TALK SHOW
-                            </div>
+                            <a href="{{ route('now-playing') }}"
+                                class="absolute top-6 left-4 bg-green-600 text-white text-md font-bold px-3 py-1 rounded-full">
+                                Kembali
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -430,7 +430,10 @@
                     </div>
 
                     <!-- Action Button - DIUBAH -->
-                   
+                    <a href="{{ route('booking.seats', ['event_id' => $event_id ?? 'competition-event']) }}"
+                        class="block w-full py-3 bg-green-600 text-white text-center font-bold rounded-lg hover:bg-yellow-700 transition-colors duration-300 mb-4">
+                        Beli Tiket Sekarang
+                    </a>
 
                     <!-- Info Tambahan -->
                     <div class="border-t border-gray-700 pt-4 space-y-3">

@@ -85,15 +85,34 @@ Route::get('/event/talk-show/{slug}', function ($slug) {
         'event_id' => 'talkshow-' . str_replace('-', '', $slug)
     ]);
 })->name('event.talk-show.detail');
+Route::get('/wishlist', function () {
+    return view('guest.wishlist.index');
+})->name('wishlist.index');
+
+
 /*
 |--------------------------------------------------------------------------
 | Authenticated Routes (User)
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth', 'user'])
+    ->prefix('user')
+    ->name('user.')
+    ->group(function () {
+
+        Route::get('/profile', function () {
+            return view('user.profile');
+        })->name('profile');
+
+        Route::get('/wishlist', function () {
+            return view('user.wishlist');
+        })->name('wishlist');
+
+        Route::get('/history', function () {
+            return view('user.history');
+        })->name('history');
+    });
 
 Route::get('/my-tickets', function () {
     return view('user.my-tickets');
@@ -109,9 +128,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Wishlist
-    Route::get('/wishlist', function () {
-        return view('user.wishlist');
-    })->name('wishlist');
+    //Route::get('/wishlist', function () {
+    //    return view('user.wishlist');
+    //})->name('wishlist');
 
     // History
     Route::get('/history', function () {
@@ -125,51 +144,55 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
 
-    // Films Management
-    Route::get('/films', function () {
-        return view('admin.films.index');
-    })->name('films.index');
+        // Films Management
+        Route::get('/film', function () {
+            return view('admin.film.index');
+        })->name('film.index');
 
-    Route::get('/films/create', function () {
-        return view('admin.films.create');
-    })->name('films.create');
+        Route::get('/film/create', function () {
+            return view('admin.film.create');
+        })->name('film.create');
 
-    Route::get('/films/{id}/edit', function ($id) {
-        return view('admin.films.edit');
-    })->name('films.edit');
+        Route::get('/film/{id}/edit', function ($id) {
+            return view('admin.film.edit');
+        })->name('film.edit');
 
-    // Showtimes Management
-    Route::get('/showtimes', function () {
-        return view('admin.showtimes.index');
-    })->name('showtimes.index');
+        // Showtimes Management
+        Route::get('/showtimes', function () {
+            return view('admin.showtimes.index');
+        })->name('showtimes.index');
 
-    Route::get('/showtimes/create', function () {
-        return view('admin.showtimes.create');
-    })->name('showtimes.create');
+        Route::get('/showtimes/create', function () {
+            return view('admin.showtimes.create');
+        })->name('showtimes.create');
 
-    // Cinemas Management
-    Route::get('/cinemas', function () {
-        return view('admin.cinemas.index');
-    })->name('cinemas.index');
+        // Cinemas Management
+        Route::get('/cinemas', function () {
+            return view('admin.cinemas.index');
+        })->name('cinemas.index');
 
-    // Promo Management
-    Route::get('/promos', function () {
-        return view('admin.promos.index');
-    })->name('promos.index');
+        // Promo Management
+        Route::get('/promos', function () {
+            return view('admin.promos.index');
+        })->name('promos.index');
 
-    // Orders Management
-    Route::get('/orders', function () {
-        return view('admin.orders.index');
-    })->name('orders.index');
+        // Orders Management
+        Route::get('/orders', function () {
+            return view('admin.orders.index');
+        })->name('orders.index');
 
-    // Users Management
-    Route::get('/users', function () {
-        return view('admin.users.index');
-    })->name('users.index');
-});
+        // Users Management
+        Route::get('/users', function () {
+            return view('admin.users.index');
+        })->name('users.index');
+    });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -292,7 +315,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     Route::get('/my-tickets', fn() => view('user.my-tickets'))->name('my-tickets');
     Route::get('/my-profile', fn() => view('user.profile'))->name('my-profile');
-    Route::get('/wishlist', fn() => view('user.wishlist'))->name('wishlist');
+    //Route::get('/wishlist', fn() => view('user.wishlist'))->name('wishlist');
     Route::get('/history', fn() => view('user.history'))->name('history');
 
     //     // Ticket Detail

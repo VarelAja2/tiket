@@ -9,6 +9,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="#">
 
@@ -55,6 +58,32 @@
         .horizontal-scroll::-webkit-scrollbar {
             display: none;
         }
+
+        /* Pulse animation for notification badge */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Search bar animation */
+        .search-expand {
+            transition: all 0.3s ease;
+        }
+
+        .search-expand:focus {
+            width: 250px;
+        }
     </style>
 
     <!-- Simple JS for mobile menu -->
@@ -86,6 +115,25 @@
                     slides[currentSlide].classList.remove('hidden');
                 }, 5000);
             }
+
+            // Toggle search bar on mobile
+            const searchToggle = document.getElementById('search-toggle');
+            const searchBar = document.getElementById('search-bar');
+
+            if (searchToggle && searchBar) {
+                searchToggle.addEventListener('click', function() {
+                    searchBar.classList.toggle('hidden');
+                    if (!searchBar.classList.contains('hidden')) {
+                        searchBar.querySelector('input').focus();
+                    }
+                });
+            }
+
+            // Wishlist counter
+            const wishlistCount = 3; // Dummy data
+            document.querySelectorAll('.wishlist-count').forEach(el => {
+                el.textContent = wishlistCount;
+            });
         });
     </script>
 </head>
@@ -97,49 +145,221 @@
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="{{ url('/') }}" class="text-2xl font-bold text-red-600">BPIX</a>
+                    <a href="{{ route('home') }}" class="text-2xl font-bold text-red-600 flex items-center">
+                        BPIX
+                    </a>
                 </div>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="hover:text-red-500 transition-colors duration-300">Beranda</a>
-                    <a href="{{ route('now-playing') }}" class="hover:text-red-500 transition-colors duration-300">Buy
-                        Ticket</a>
-                    <a href="{{ route('help') }}" class="hover:text-red-500 transition-colors duration-300">Tentang</a>
+                    <a href="{{ route('home') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home mr-2"></i>
+                        Beranda
+                    </a>
+                    <a href="{{ route('now-playing') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-film mr-2"></i>
+                        Buy Ticket
+                    </a>
+                    <a href="{{ route('help') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Tentang
+                    </a>
                     <a href="{{ route('contact') }}"
-                        class="hover:text-red-500 transition-colors duration-300">Kontak</a>
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        Kontak
+                    </a>
                 </div>
 
-                <!-- Desktop Buttons -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="{{ route('login') }}"
-                        class="px-4 py-2 rounded-lg border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300">Masuk</a>
-                    <a href="{{ route('register') }}"
-                        class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors duration-300">Daftar</a>
+                <!-- Desktop Right Section - Search, Wishlist, Auth -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <div class="relative search-expand">
+                            <input type="text" placeholder="Cari event atau film..."
+                                class="pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white focus:outline-none focus:border-red-500 w-40 focus:w-64 transition-all duration-300">
+                            <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist Icon with Badge -->
+                    <div class="relative">
+                        <a href="{{ route('wishlist.index') }}"
+                            class="relative text-gray-300 hover:text-red-500 transition-colors duration-300">
+                            <i class="fas fa-heart text-xl"></i>
+                            <span
+                                class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                                <span class="wishlist-count">3</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Separator -->
+                    <div class="h-6 w-px bg-gray-700"></div>
+
+                    <!-- Auth Buttons -->
+                    @guest
+                        <div class="flex items-center space-x-4">
+                            <a href="{{ route('login') }}"
+                                class="px-4 py-2 rounded-lg border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300">
+                                Masuk
+                            </a>
+                            <a href="{{ route('register') }}"
+                                class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors duration-300">
+                                Daftar
+                            </a>
+                        </div>
+                    @endguest
+
+                    @auth
+                        <div class="relative group">
+                            <button class="flex items-center space-x-2 hover:text-red-500 transition">
+                                <i class="fas fa-user-circle text-xl"></i>
+                                <span class="text-sm font-medium">{{ auth()->user()->name }}</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+
+                            <!-- Dropdown -->
+                            <div
+                                class="absolute right-0 mt-2 w-44 bg-gray-800 rounded-lg shadow-lg
+                opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                transition-all duration-200 z-50">
+                                <a href="{{ route('user.profile') }}" class="block px-4 py-2 hover:bg-gray-700 text-sm">
+                                    <i class="fas fa-user mr-2"></i> Profile
+                                </a>
+
+                                <a href="{{ route('user.history') }}" class="block px-4 py-2 hover:bg-gray-700 text-sm">
+                                    <i class="fas fa-ticket-alt mr-2"></i> Riwayat
+                                </a>
+
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 hover:bg-red-600 text-sm">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <!-- Mobile Menu Button with Icons -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <!-- Mobile Search Toggle -->
+                    <button id="search-toggle" class="text-gray-300 hover:text-red-500">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+
+                    <!-- Mobile Wishlist -->
+                    <a href="{{ route('wishlist.index') }}" class="relative text-gray-300 hover:text-red-500">
+                        <i class="fas fa-heart text-xl"></i>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                            <span class="wishlist-count">3</span>
+                        </span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div id="search-bar" class="md:hidden hidden mt-4 mb-2">
+                <div class="relative">
+                    <input type="text" placeholder="Cari event atau film..."
+                        class="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-red-500">
+                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                </div>
             </div>
 
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="md:hidden hidden py-4 border-t border-gray-800">
                 <div class="flex flex-col space-y-4">
-                    <a href="#" class="hover:text-red-500 transition-colors duration-300">Home</a>
-                    <a href="#" class="hover:text-red-500 transition-colors duration-300">Buy Ticket</a>
-                    <a href="#" class="hover:text-red-500 transition-colors duration-300">Tentang</a>
-                    <a href="#" class="hover:text-red-500 transition-colors duration-300">Kontak</a>
+                    <a href="{{ route('home') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home mr-3 w-5"></i>
+                        Beranda
+                    </a>
+                    <a href="{{ route('now-playing') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-film mr-3 w-5"></i>
+                        Buy Ticket
+                    </a>
+                    <a href="{{ route('help') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-info-circle mr-3 w-5"></i>
+                        Tentang
+                    </a>
+                    <a href="{{ route('contact') }}"
+                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                        <i class="fas fa-phone-alt mr-3 w-5"></i>
+                        Kontak
+                    </a>
 
-                    <div class="flex flex-col space-y-2 pt-4 border-t border-gray-800">
-                        <a href="#"
-                            class="px-4 py-2 rounded-lg border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-300 text-center">Masuk</a>
-                        <a href="#"
-                            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors duration-300 text-center">Daftar</a>
+                    <div class="pt-4 border-t border-gray-800">
+                        <div class="mb-4">
+                            <a href="{{ route('wishlist.index') }}"
+                                class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-heart mr-3 w-5"></i>
+                                Wishlist
+                                <span
+                                    class="ml-auto bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                    <span class="wishlist-count">3</span>
+                                </span>
+                            </a>
+                        </div>
+
+                        @guest
+                            <div class="flex flex-col space-y-2">
+                                <a href="{{ route('login') }}"
+                                    class="px-4 py-2 rounded-lg border border-red-600 text-red-600
+              hover:bg-red-600 hover:text-white transition text-center">
+                                    <i class="fas fa-sign-in-alt mr-2"></i> Masuk
+                                </a>
+                                <a href="{{ route('register') }}"
+                                    class="px-4 py-2 rounded-lg bg-red-600 text-white
+              hover:bg-red-700 transition text-center">
+                                    <i class="fas fa-user-plus mr-2"></i> Daftar
+                                </a>
+                            </div>
+                        @endguest
+
+                        @auth
+                            <div class="flex flex-col space-y-2">
+                                <a href="{{ route('user.profile') }}"
+                                    class="px-4 py-2 hover:bg-gray-800 rounded-lg flex items-center">
+                                    <i class="fas fa-user mr-2"></i> Profile
+                                </a>
+
+                                <a href="{{ route('user.wishlist') }}"
+                                    class="px-4 py-2 hover:bg-gray-800 rounded-lg flex items-center">
+                                    <i class="fas fa-heart mr-2"></i> Wishlist
+                                </a>
+
+                                <a href="{{ route('user.history') }}"
+                                    class="px-4 py-2 hover:bg-gray-800 rounded-lg flex items-center">
+                                    <i class="fas fa-ticket-alt mr-2"></i> Riwayat
+                                </a>
+
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full px-4 py-2 text-left text-red-500 hover:bg-red-600 hover:text-white rounded-lg transition">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -157,7 +377,10 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Tentang Kami -->
                 <div>
-                    <h3 class="text-xl font-bold text-red-600 mb-4">BPIX</h3>
+                    <h3 class="text-xl font-bold text-red-600 mb-4 flex items-center">
+                        <i class="fas fa-ticket-alt mr-2"></i>
+                        BPIX
+                    </h3>
                     <p class="text-gray-400 text-sm">
                         Platform pemesanan tiket event online di smk bppi baleendah. Pesan tiket dengan mudah, cepat,
                         dan aman.
@@ -166,69 +389,101 @@
 
                 <!-- Menu Cepat -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Menu Cepat</h4>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-bars mr-2"></i>
+                        Menu Cepat
+                    </h4>
                     <ul class="space-y-2">
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Home</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Buy Ticket</a>
-                        </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Tentang</a>
-                        </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Kontak</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Promo</a></li>
+                        <li><a href="{{ route('home') }}"
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-home mr-2 text-xs"></i>
+                                Home
+                            </a></li>
+                        <li><a href="{{ route('now-playing') }}"
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-film mr-2 text-xs"></i>
+                                Buy Ticket
+                            </a></li>
+                        <li><a href="{{ route('help') }}"
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-info-circle mr-2 text-xs"></i>
+                                Tentang
+                            </a></li>
+                        <li><a href="{{ route('contact') }}"
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-phone-alt mr-2 text-xs"></i>
+                                Kontak
+                            </a></li>
+                        <li><a href="{{ route('coming-soon') }}"
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-calendar mr-2 text-xs"></i>
+                                Akan Hadir
+                            </a></li>
                     </ul>
                 </div>
 
                 <!-- Bantuan -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Bantuan</h4>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-question-circle mr-2"></i>
+                        Bantuan
+                    </h4>
                     <ul class="space-y-2">
                         <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">FAQ</a></li>
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-question mr-2 text-xs"></i>
+                                FAQ
+                            </a></li>
                         <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Cara Pesan</a>
-                        </li>
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-shopping-cart mr-2 text-xs"></i>
+                                Cara Pesan
+                            </a></li>
                         <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Syarat &
-                                Ketentuan</a></li>
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-file-contract mr-2 text-xs"></i>
+                                Syarat & Ketentuan
+                            </a></li>
                         <li><a href="#"
-                                class="text-gray-400 hover:text-red-500 transition-colors duration-300">Kebijakan
-                                Privasi</a></li>
+                                class="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center">
+                                <i class="fas fa-shield-alt mr-2 text-xs"></i>
+                                Kebijakan Privasi
+                            </a></li>
                     </ul>
                 </div>
 
                 <!-- Sosial Media -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Ikuti Kami</h4>
+                    <h4 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-hashtag mr-2"></i>
+                        Ikuti Kami
+                    </h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-300">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                            </svg>
+                        <a href="#"
+                            class="text-gray-400 hover:text-red-500 transition-colors duration-300 text-2xl">
+                            <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-300">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                            </svg>
+                        <a href="#"
+                            class="text-gray-400 hover:text-red-500 transition-colors duration-300 text-2xl">
+                            <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-300">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
-                            </svg>
+                        <a href="#"
+                            class="text-gray-400 hover:text-red-500 transition-colors duration-300 text-2xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#"
+                            class="text-gray-400 hover:text-red-500 transition-colors duration-300 text-2xl">
+                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-                <p>&copy; 2026 BPIX. All rights reserved.</p>
+                <p class="flex items-center justify-center">
+                    <i class="fas fa-copyright mr-2"></i>
+                    2026 BPIX. All rights reserved.
+                </p>
             </div>
         </div>
     </footer>
