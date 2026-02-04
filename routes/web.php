@@ -1,9 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Guest\HomeController;
+use App\Http\Controllers\Guest\EventController;
+use App\Http\Controllers\Guest\PromoController;
+use App\Http\Controllers\Guest\CinemaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\HomeContentController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\DashboardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,29 +19,48 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
+// Home Page with Controller (NEW - DYNAMIC)
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Backup route for testing - tetap pertahankan yang lama
+Route::get('/home-static', function () {
     return view('guest.home');
-})->name('home');
+})->name('home.static');
 
 Route::get('/now-playing', function () {
     return view('guest.now-playing');
 })->name('now-playing');
 
+// Dynamic Now Playing (NEW)
+Route::get('/now-playing-dynamic', [HomeController::class, 'nowPlaying'])->name('now-playing.dynamic');
+
 Route::get('/coming-soon', function () {
     return view('guest.coming-soon');
 })->name('coming-soon');
+
+// Dynamic Coming Soon (NEW)
+Route::get('/coming-soon-dynamic', [HomeController::class, 'comingSoon'])->name('coming-soon.dynamic');
 
 Route::get('/cinemas', function () {
     return view('guest.cinemas');
 })->name('cinemas');
 
+// Dynamic Cinemas (NEW)
+Route::get('/cinemas-dynamic', [CinemaController::class, 'index'])->name('cinemas.dynamic');
+
 Route::get('/promo', function () {
     return view('guest.promo');
 })->name('promo');
 
+// Dynamic Promo (NEW)
+Route::get('/promo-dynamic', [PromoController::class, 'index'])->name('promo.dynamic');
+
 Route::get('/film/{slug}', function ($slug) {
     return view('guest.film.detail');
 })->name('film.detail');
+
+// Dynamic Event Detail (NEW)
+Route::get('/event/{slug}', [EventController::class, 'show'])->name('event.show');
 
 Route::get('/cinema/{id}', function ($id) {
     return view('guest.cinema.detail');
@@ -43,7 +70,7 @@ Route::get('/ticket/{id}', function ($id) {
     return view('guest.ticket.detail');
 })->middleware('auth')->name('ticket.detail');
 
-// Event Detail Routes
+// Event Detail Routes (KEEP EXISTING)
 Route::get('/event/seminar/{slug}', function ($slug) {
     return view('event.seminar.detail');
 })->name('event.seminar.detail');
@@ -71,7 +98,6 @@ Route::get('/booking/competition/{event_id}', function ($event_id) {
     return view('guest.booking.competition', ['event_id' => $event_id]);
 })->name('competition.register');
 
-// Perbaiki route kompetisi detail
 Route::get('/event/kompetisi/{slug}', function ($slug) {
     return view('event.kompetisi.detail', [
         'slug' => $slug,
@@ -85,10 +111,37 @@ Route::get('/event/talk-show/{slug}', function ($slug) {
         'event_id' => 'talkshow-' . str_replace('-', '', $slug)
     ]);
 })->name('event.talk-show.detail');
+
 Route::get('/wishlist', function () {
     return view('guest.wishlist.index');
 })->name('wishlist.index');
 
+// Search
+Route::get('/search', function () {
+    return view('guest.search');
+})->name('search');
+
+// FAQ & Help
+Route::get('/faq', function () {
+    return view('guest.faq');
+})->name('faq');
+
+Route::get('/help', function () {
+    return view('guest.help');
+})->name('help');
+
+Route::get('/contact', function () {
+    return view('guest.contact');
+})->name('contact');
+
+// Terms & Privacy
+Route::get('/terms', function () {
+    return view('guest.terms');
+})->name('terms');
+
+Route::get('/privacy', function () {
+    return view('guest.privacy');
+})->name('privacy');
 
 /*
 |--------------------------------------------------------------------------
@@ -127,12 +180,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Wishlist
-    //Route::get('/wishlist', function () {
-    //    return view('user.wishlist');
-    //})->name('wishlist');
-
-    // History
     Route::get('/history', function () {
         return view('user.history');
     })->name('history');
@@ -140,7 +187,7 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes
+| Admin Routes (UPDATE - TAMBAH ROUTES BARU)
 |--------------------------------------------------------------------------
 */
 
@@ -148,9 +195,39 @@ Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
+        // Dashboard (KEEP EXISTING)
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // Films Management
+        // NEW: Banner Management
+        Route::prefix('banners')->name('banners.')->group(function () {
+            Route::get('/', [HomeContentController::class, 'bannerIndex'])->name('index');
+            Route::get('/create', [HomeContentController::class, 'bannerCreate'])->name('create');
+            Route::post('/', [HomeContentController::class, 'bannerStore'])->name('store');
+            Route::get('/{banner}/edit', [HomeContentController::class, 'bannerEdit'])->name('edit');
+            Route::put('/{banner}', [HomeContentController::class, 'bannerUpdate'])->name('update');
+            Route::delete('/{banner}', [HomeContentController::class, 'bannerDestroy'])->name('destroy');
+        });
+
+        // NEW: Event Management
+        Route::prefix('events')->name('events.')->group(function () {
+            Route::get('/', [AdminEventController::class, 'index'])->name('index');
+            Route::get('/create', [AdminEventController::class, 'create'])->name('create');
+            Route::post('/', [AdminEventController::class, 'store'])->name('store');
+            Route::get('/{event}/edit', [AdminEventController::class, 'edit'])->name('edit');
+            Route::put('/{event}', [AdminEventController::class, 'update'])->name('update');
+            Route::delete('/{event}', [AdminEventController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('categories')->name('categories.')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('index');
+            Route::get('/create', [CategoryController::class, 'create'])->name('create');
+            Route::post('/', [CategoryController::class, 'store'])->name('store');
+            Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
+            Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
+            Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        // KEEP EXISTING ADMIN ROUTES
         Route::get('/film', function () {
             return view('admin.film.index');
         })->name('film.index');
@@ -163,7 +240,6 @@ Route::middleware(['auth', 'admin'])
             return view('admin.film.edit');
         })->name('film.edit');
 
-        // Showtimes Management
         Route::get('/showtimes', function () {
             return view('admin.showtimes.index');
         })->name('showtimes.index');
@@ -172,27 +248,22 @@ Route::middleware(['auth', 'admin'])
             return view('admin.showtimes.create');
         })->name('showtimes.create');
 
-        // Cinemas Management
         Route::get('/cinemas', function () {
             return view('admin.cinemas.index');
         })->name('cinemas.index');
 
-        // Promo Management
         Route::get('/promos', function () {
             return view('admin.promos.index');
         })->name('promos.index');
 
-        // Orders Management
         Route::get('/orders', function () {
             return view('admin.orders.index');
         })->name('orders.index');
 
-        // Users Management
         Route::get('/users', function () {
             return view('admin.users.index');
         })->name('users.index');
     });
-
 
 /*
 |--------------------------------------------------------------------------
@@ -229,14 +300,6 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Auth Routes (Breeze)
-|--------------------------------------------------------------------------
-*/
-
-require __DIR__ . '/auth.php';
-
-/*
-|--------------------------------------------------------------------------
 | Payment Callback Routes
 |--------------------------------------------------------------------------
 */
@@ -244,151 +307,4 @@ require __DIR__ . '/auth.php';
 Route::post('/payment/callback', [OrderController::class, 'callback'])
     ->name('payment.callback');
 
-/*
-|--------------------------------------------------------------------------
-| Search Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/search', function () {
-    return view('guest.search');
-})->name('search');
-
-/*
-|--------------------------------------------------------------------------
-| FAQ & Help Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/faq', function () {
-    return view('guest.faq');
-})->name('faq');
-
-Route::get('/help', function () {
-    return view('guest.help');
-})->name('help');
-
-Route::get('/contact', function () {
-    return view('guest.contact');
-})->name('contact');
-
-/*
-|--------------------------------------------------------------------------
-| Terms & Conditions Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/terms', function () {
-    return view('guest.terms');
-})->name('terms');
-
-Route::get('/privacy', function () {
-    return view('guest.privacy');
-})->name('privacy');
-
 require __DIR__ . '/auth.php';
-
-Route::get('/', fn() => view('guest.home'))->name('home');
-Route::get('/now-playing', fn() => view('guest.now-playing'))->name('now-playing');
-Route::get('/coming-soon', fn() => view('guest.coming-soon'))->name('coming-soon');
-Route::get('/cinemas', fn() => view('guest.cinemas'))->name('cinemas');
-Route::get('/promo', fn() => view('guest.promo'))->name('promo');
-Route::get('/film/{slug}', fn($slug) => view('guest.film.detail'))->name('film.detail');
-Route::get('/cinema/{id}', fn($id) => view('guest.cinema.detail'))->name('cinema.detail');
-
-Route::get('/search', fn() => view('guest.search'))->name('search');
-Route::get('/faq', fn() => view('guest.faq'))->name('faq');
-Route::get('/help', fn() => view('guest.help'))->name('help');
-Route::get('/contact', fn() => view('guest.contact'))->name('contact');
-Route::get('/terms', fn() => view('guest.terms'))->name('terms');
-Route::get('/privacy', fn() => view('guest.privacy'))->name('privacy');
-
-// /*
-// |--------------------------------------------------------------------------
-// | Authenticated Routes (User)
-// |--------------------------------------------------------------------------
-// */
-
-Route::middleware('auth')->group(function () {
-
-    //     // Dashboard & User Pages
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
-    Route::get('/my-tickets', fn() => view('user.my-tickets'))->name('my-tickets');
-    Route::get('/my-profile', fn() => view('user.profile'))->name('my-profile');
-    //Route::get('/wishlist', fn() => view('user.wishlist'))->name('wishlist');
-    Route::get('/history', fn() => view('user.history'))->name('history');
-
-    //     // Ticket Detail
-    Route::get('/ticket/{id}', fn($id) => view('guest.ticket.detail'))
-        ->name('ticket.detail');
-
-    // Profile (Breeze)
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Booking & Order Routes
-    //     |--------------------------------------------------------------------------
-    //     */
-
-    Route::get('/booking/{showtime_id}/seats', fn($id) => view('booking.seats'))
-        ->name('booking.seats');
-
-    Route::get('/booking/{showtime_id}/confirm', fn($id) => view('booking.confirm'))
-        ->name('booking.confirm');
-
-    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
-    Route::get('/order/{id}/pay', [OrderController::class, 'pay'])->name('order.pay');
-
-    Route::get('/order/{id}/pending', fn($id) => view('order.pending'))->name('order.pending');
-    Route::get('/order/{id}/success', fn($id) => view('order.success'))->name('order.success');
-    Route::get('/order/{id}/failed', fn($id) => view('order.failed'))->name('order.failed');
-
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-});
-
-// /*
-// |--------------------------------------------------------------------------
-// | Admin Routes
-// |--------------------------------------------------------------------------
-// */
-
-Route::middleware(['auth', 'admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-        Route::get('/films', fn() => view('admin.films.index'))->name('films.index');
-        Route::get('/films/create', fn() => view('admin.films.create'))->name('films.create');
-        Route::get('/films/{id}/edit', fn($id) => view('admin.films.edit'))->name('films.edit');
-
-        Route::get('/showtimes', fn() => view('admin.showtimes.index'))->name('showtimes.index');
-        Route::get('/showtimes/create', fn() => view('admin.showtimes.create'))->name('showtimes.create');
-
-        Route::get('/cinemas', fn() => view('admin.cinemas.index'))->name('cinemas.index');
-        Route::get('/promos', fn() => view('admin.promos.index'))->name('promos.index');
-        Route::get('/orders', fn() => view('admin.orders.index'))->name('orders.index');
-        Route::get('/users', fn() => view('admin.users.index'))->name('users.index');
-    });
-
-// /*
-// |--------------------------------------------------------------------------
-// | Auth Routes (Laravel Breeze)
-// |--------------------------------------------------------------------------
-// */
-
-require __DIR__ . '/auth.php';
-
-// /*
-// |--------------------------------------------------------------------------
-// | Payment Callback (External)
-// |--------------------------------------------------------------------------
-// */
-
-Route::post('/payment/callback', [OrderController::class, 'callback'])
-    ->name('payment.callback');

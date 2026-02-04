@@ -5,129 +5,45 @@
     <section class="relative overflow-hidden bg-gray-900">
         <!-- Hero Slider -->
         <div class="relative h-96 md:h-[500px] overflow-hidden">
-            <!-- Slide 1 -->
-            <div class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000">
-                <!-- Background Image -->
-                <div class="absolute inset-0">
-                    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent z-10"></div>
-                    <div class="w-full h-full bg-cover bg-center"
-                        style="background-image: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80')">
+            @foreach ($banners as $index => $banner)
+                <!-- Slide {{ $index + 1 }} -->
+                <div
+                    class="hero-slide absolute inset-0 w-full h-full transition-opacity duration-1000 {{ $index !== 0 ? 'hidden' : '' }}">
+                    <!-- Background Image -->
+                    <div class="absolute inset-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent z-10">
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image: url('{{ $banner->image_url }}')">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Content -->
-                <div class="relative h-full flex items-center">
-                    <div class="container mx-auto px-4 z-20">
-                        <div class="max-w-2xl animate-fade-in">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Pesan Tiket Event Tanpa Ribet</h1>
-                            <p class="text-lg md:text-xl text-gray-300 mb-8">Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Esse molestiae voluptate quia! Illum vero ipsum at impedit! Eligendi
-                                voluptatem
-                                iure blanditiis distinctio, accusamus, fugit minus accusantium, repellat cupiditate atque
-                                hic.</p>
-                            <div class="flex flex-wrap gap-4">
-                                <a href="#"
-                                    class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">Lihat
-                                    Film</a>
-                                <a href="#"
-                                    class="px-6 py-3 bg-transparent border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 transform hover:scale-105">Promo
-                                    Hari Ini</a>
+                    <!-- Content -->
+                    <div class="relative h-full flex items-center">
+                        <div class="container mx-auto px-4 z-20">
+                            <div class="max-w-2xl animate-fade-in">
+                                <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ $banner->title }}</h1>
+                                <p class="text-lg md:text-xl text-gray-300 mb-8">{{ $banner->description }}</p>
+                                <div class="flex flex-wrap gap-4">
+                                    @if ($banner->button_text && $banner->button_url)
+                                        <a href="{{ $banner->button_url }}"
+                                            class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">
+                                            {{ $banner->button_text }}
+                                        </a>
+                                    @endif
+
+                                    @if ($banner->button_secondary_text && $banner->button_secondary_url)
+                                        <a href="{{ $banner->button_secondary_url }}"
+                                            class="px-6 py-3 bg-transparent border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 transform hover:scale-105">
+                                            {{ $banner->button_secondary_text }}
+                                        </a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="hero-slide hidden absolute inset-0 w-full h-full transition-opacity duration-1000">
-                <!-- Background Image -->
-                <div class="absolute inset-0">
-                    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent z-10"></div>
-                    <div class="w-full h-full bg-cover bg-center"
-                        style="background-image: url('https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80')">
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="relative h-full flex items-center">
-                    <div class="container mx-auto px-4 z-20">
-                        <div class="max-w-2xl animate-fade-in">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Event Menarik Setiap Minggu</h1>
-                            <p class="text-lg md:text-xl text-gray-300 mb-8">Dapatkan tiket event terbaru
-                                sebelum kehabisan.</p>
-                            <div class="flex flex-wrap gap-4">
-                                <a href="#"
-                                    class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">Beli
-                                    Tiket</a>
-                                <a href="#"
-                                    class="px-6 py-3 bg-transparent border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 transform hover:scale-105">Jadwal
-                                    Tayang</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="hero-slide hidden absolute inset-0 w-full h-full transition-opacity duration-1000">
-                <!-- Background Image -->
-                <div class="absolute inset-0">
-                    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent z-10"></div>
-                    <div class="w-full h-full bg-cover bg-center"
-                        style="background-image: url('https://images.unsplash.com/photo-1574267432553-4b4628081c31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1931&q=80')">
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="relative h-full flex items-center">
-                    <div class="container mx-auto px-4 z-20">
-                        <div class="max-w-2xl animate-fade-in">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Tempat Nyaman & Modern</h1>
-                            <p class="text-lg md:text-xl text-gray-300 mb-8">Tempat outdoor dan nyaman untuk digunakan
-                                dengan
-                                pengalaman event terbaik</p>
-                            <div class="flex flex-wrap gap-4">
-                                <a href="{{ route('cinemas') }}"
-                                    class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">Cari
-                                    Lokasi</a>
-                                <a href="#"
-                                    class="px-6 py-3 bg-transparent border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 transform hover:scale-105">Lihat
-                                    Fasilitas</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="hero-slide hidden absolute inset-0 w-full h-full transition-opacity duration-1000">
-                <!-- Background Image -->
-                <div class="absolute inset-0">
-                    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-transparent z-10"></div>
-                    <div class="w-full h-full bg-cover bg-center"
-                        style="background-image: url('https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1956&q=80')">
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div class="relative h-full flex items-center">
-                    <div class="container mx-auto px-4 z-20">
-                        <div class="max-w-2xl animate-fade-in">
-                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Promo Spesial Member</h1>
-                            <p class="text-lg md:text-xl text-gray-300 mb-8">Dapatkan diskon hingga 50% untuk member setia
-                                dan berbagai penawaran menarik lainnya.</p>
-                            <div class="flex flex-wrap gap-4">
-                                <a href="{{ route('promo') }}"
-                                    class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105">Lihat
-                                    Promo</a>
-                                <a href="{{ route('register') }}"
-                                    class="px-6 py-3 bg-transparent border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300 transform hover:scale-105">Daftar
-                                    Member</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
 
             <!-- Navigation Buttons -->
             <button id="prev-slide"
@@ -146,13 +62,10 @@
 
             <!-- Slide Indicators -->
             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
-                <button class="slide-indicator w-3 h-3 rounded-full bg-red-600 transition-all duration-300"></button>
-                <button
-                    class="slide-indicator w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-400 transition-all duration-300"></button>
-                <button
-                    class="slide-indicator w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-400 transition-all duration-300"></button>
-                <button
-                    class="slide-indicator w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-400 transition-all duration-300"></button>
+                @foreach ($banners as $index => $banner)
+                    <button
+                        class="slide-indicator w-3 h-3 rounded-full {{ $index === 0 ? 'bg-red-600' : 'bg-gray-600 hover:bg-gray-400' }} transition-all duration-300"></button>
+                @endforeach
             </div>
         </div>
     </section>
@@ -168,198 +81,91 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Movie Card 1 -->
-                <div
-                    class="group relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-red-900/30">
-                    <!-- Image Container -->
-                    <div class="relative h-64 overflow-hidden">
-                        <!-- Main Image -->
-                        <img src="https://images.unsplash.com/photo-1595769812725-4c6564f7528b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Avengers: Endgame"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-
-                        <!-- Age Rating Badge -->
-                        <div
-                            class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                            13+
-                        </div>
-
-                        <!-- Rating -->
-                        <div
-                            class="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg">
-                            <span class="text-yellow-400 mr-1">★</span> 8.5
-                        </div>
-
-                        <!-- Hover Effect Overlay -->
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-red-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-red-300 transition-colors duration-300">
-                            Avengers: Endgame
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-1">Action, Adventure, Sci-Fi</p>
-                        <p class="text-gray-500 text-xs mb-4">2h 58m • 2019</p>
-
-                        <!-- Button with smooth transition -->
-                        <a href="{{ route('event.festival.detail', ['slug' => 'festival event']) }}"
-                            class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 transform group-hover:translate-y-0 hover:shadow-lg hover:shadow-red-900/30">
-                            <span class="font-medium">Beli Tiket</span>
-                            <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <!-- Subtle Border Glow on Hover -->
+                @foreach ($nowPlayingEvents as $event)
                     <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-red-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
+                        class="group relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-red-900/30">
+                        <!-- Image Container -->
+                        <div class="relative h-64 overflow-hidden">
+                            <!-- Main Image -->
+                            <img src="{{ $event->image_url }}" alt="{{ $event->title }}"
+                                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
 
-                <!-- Movie Card 2 -->
-                <div
-                    class="group relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-blue-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Joker"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-yellow-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                            17+
+                            <!-- Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent">
+                            </div>
+
+                            <!-- Age Rating Badge -->
+                            <div
+                                class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                                {{ $event->age_rating }}
+                            </div>
+
+                            <!-- Rating -->
+                            @if ($event->rating)
+                                <div
+                                    class="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg">
+                                    <span class="text-yellow-400 mr-1">★</span> {{ number_format($event->rating, 1) }}
+                                </div>
+                            @endif
+
+                            <!-- Hover Effect Overlay -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-red-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
                         </div>
-                        <div
-                            class="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg">
-                            <span class="text-yellow-400 mr-1">★</span> 7.9
+
+                        <!-- Content -->
+                        <div class="p-5">
+                            <h3
+                                class="font-bold text-lg mb-2 text-white group-hover:text-red-300 transition-colors duration-300">
+                                {{ $event->title }}
+                            </h3>
+                            <p class="text-gray-400 text-sm mb-1">
+                                @foreach ($event->genres as $genre)
+                                    {{ $genre->name }}@if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
+                            </p>
+                            <p class="text-gray-500 text-xs mb-4">
+                                {{ $event->duration ? $event->duration . ' • ' : '' }}{{ $event->release_year }}
+                            </p>
+
+                            <!-- Price -->
+                            <div class="mb-4">
+                                @if ($event->discount_price)
+                                    <div class="flex items-center">
+                                        <span
+                                            class="text-lg font-bold text-red-400">{{ $event->formatted_discount_price }}</span>
+                                        <span
+                                            class="ml-2 text-sm text-gray-400 line-through">{{ $event->formatted_price }}</span>
+                                        <span class="ml-2 text-xs bg-red-600 text-white px-2 py-1 rounded-full">
+                                            -{{ $event->discount_percentage }}%
+                                        </span>
+                                    </div>
+                                @else
+                                    <div class="text-lg font-bold text-white">{{ $event->formatted_price }}</div>
+                                @endif
+                            </div>
+
+                            <!-- Button with smooth transition -->
+                            <a href="{{ route('event.show', ['slug' => $event->slug]) }}"
+                                class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 transform group-hover:translate-y-0 hover:shadow-lg hover:shadow-red-900/30">
+                                <span class="font-medium">Beli Tiket</span>
+                                <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
                         </div>
+
+                        <!-- Subtle Border Glow on Hover -->
                         <div
-                            class="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-blue-300 transition-colors duration-300">
-                            Joker
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-1">Drama, Thriller, Crime</p>
-                        <p class="text-gray-500 text-xs mb-4">2h 2m • 2019</p>
-
-                        <a href="{{ route('event.kompetisi.detail', ['slug' => 'kompetisi event']) }}"
-                            class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 transform group-hover:translate-y-0 hover:shadow-lg hover:shadow-red-900/30">
-                            <span class="font-medium">Beli Tiket</span>
-                            <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-blue-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
-
-                <!-- Movie Card 3 -->
-                <div
-                    class="group relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-green-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Spider-Man: No Way Home"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                            SU
-                        </div>
-                        <div
-                            class="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg">
-                            <span class="text-yellow-400 mr-1">★</span> 8.1
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-green-300 transition-colors duration-300">
-                            Spider-Man: No Way Home
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-1">Action, Adventure, Fantasy</p>
-                        <p class="text-gray-500 text-xs mb-4">2h 28m • 2021</p>
-
-                        <a href="{{ route('event.workshop.detail', ['slug' => 'workshop event']) }}"
-                            class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 transform group-hover:translate-y-0 hover:shadow-lg hover:shadow-red-900/30">
-                            <span class="font-medium">Beli Tiket</span>
-                            <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-green-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
-
-                <!-- Movie Card 4 -->
-                <div
-                    class="group relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="The Conjuring 3"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                            17+
-                        </div>
-                        <div
-                            class="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full flex items-center shadow-lg">
-                            <span class="text-yellow-400 mr-1">★</span> 8.7
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-red-500/30 transition-all duration-500 pointer-events-none">
                         </div>
                     </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-purple-300 transition-colors duration-300">
-                            The Conjuring 3
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-1">Horror, Mystery, Thriller</p>
-                        <p class="text-gray-500 text-xs mb-4">1h 52m • 2021</p>
-
-                        <a href="{{ route('event.seminar.detail', ['slug' => 'seminar event']) }}"
-                            class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 transform group-hover:translate-y-0 hover:shadow-lg hover:shadow-red-900/30">
-                            <span class="font-medium">Beli Tiket</span>
-                            <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-purple-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -375,376 +181,139 @@
             </div>
 
             <div class="horizontal-scroll flex space-x-6 pb-6 overflow-x-auto scrollbar-hide">
-                <!-- Coming Soon Card 1 -->
-                <div
-                    class="group flex-shrink-0 w-56 relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-red-900/30">
-                    <!-- Image Container -->
-                    <div class="relative h-64 overflow-hidden">
-                        <!-- Main Image -->
-                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Dune: Part Two"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+                @foreach ($comingSoonEvents as $event)
+                    <div
+                        class="group flex-shrink-0 w-56 relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-red-900/30">
+                        <!-- Image Container -->
+                        <div class="relative h-64 overflow-hidden">
+                            <!-- Main Image -->
+                            <img src="{{ $event->image_url }}" alt="{{ $event->title }}"
+                                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
 
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+                            <!-- Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent">
+                            </div>
 
-                        <!-- Coming Soon Badge -->
-                        <div
-                            class="absolute top-4 left-4 bg-gradient-to-r from-red-600 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                            <!-- Coming Soon Badge -->
+                            <div
+                                class="absolute top-4 left-4 bg-gradient-to-r from-red-600 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
+                                <div class="flex items-center">
+                                    <svg class="w-3 h-3 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    COMING SOON
+                                </div>
+                            </div>
+
+                            <!-- Release Date Overlay -->
+                            <div
+                                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-red-900/90 to-transparent p-4">
+                                <div class="text-white font-bold text-lg">{{ $event->event_date->format('d M') }}</div>
+                                <div class="text-gray-300 text-sm">{{ $event->event_date->format('Y') }}</div>
+                            </div>
+
+                            <!-- Hover Effect Overlay -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-red-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-5">
+                            <h3
+                                class="font-bold text-lg mb-2 text-white group-hover:text-red-300 transition-colors duration-300">
+                                {{ $event->title }}
+                            </h3>
+                            <p class="text-gray-400 text-sm mb-3">
+                                @foreach ($event->genres as $genre)
+                                    {{ $genre->name }}@if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
+                            </p>
+
+                            <!-- Countdown Timer -->
+                            <div class="flex items-center text-gray-500 text-sm mb-4">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                COMING SOON
+                                <span>{{ $event->event_date->diffForHumans() }}</span>
                             </div>
+
+                            <!-- Notify Button -->
+                            <button
+                                class="w-full py-2.5 px-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30 notify-event"
+                                data-event-id="{{ $event->id }}">
+                                <div class="flex items-center justify-center">
+                                    <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    Ingatkan Saya
+                                </div>
+                            </button>
                         </div>
 
-                        <!-- Release Date Overlay -->
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-red-900/90 to-transparent p-4">
-                            <div class="text-white font-bold text-lg">15 Des</div>
-                            <div class="text-gray-300 text-sm">2023</div>
-                        </div>
-
-                        <!-- Hover Effect Overlay -->
+                        <!-- Subtle Border Glow -->
                         <div
-                            class="absolute inset-0 bg-gradient-to-t from-red-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-red-500/30 transition-all duration-500 pointer-events-none">
                         </div>
                     </div>
-
-                    <!-- Content -->
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-red-300 transition-colors duration-300">
-                            Dune: Part Two
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-3">Sci-Fi, Adventure</p>
-
-                        <!-- Countdown Timer -->
-                        <div class="flex items-center text-gray-500 text-sm mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>12 hari lagi</span>
-                        </div>
-
-                        <!-- Notify Button -->
-                        <button
-                            class="w-full py-2.5 px-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-red-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-lg hover:shadow-red-900/30">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
-                                Ingatkan Saya
-                            </div>
-                        </button>
-                    </div>
-
-                    <!-- Subtle Border Glow -->
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-red-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
-
-                <!-- Coming Soon Card 2 -->
-                <div
-                    class="group flex-shrink-0 w-56 relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-blue-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1497124401559-3e75ec2ed794?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="The Batman 2"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                COMING SOON
-                            </div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-900/90 to-transparent p-4">
-                            <div class="text-white font-bold text-lg">20 Jan</div>
-                            <div class="text-gray-300 text-sm">2024</div>
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-blue-300 transition-colors duration-300">
-                            The Batman 2
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-3">Action, Crime, Drama</p>
-
-                        <div class="flex items-center text-gray-500 text-sm mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>48 hari lagi</span>
-                        </div>
-
-                        <button
-                            class="w-full py-2.5 px-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-900/30">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
-                                Ingatkan Saya
-                            </div>
-                        </button>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-blue-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
-
-                <!-- Coming Soon Card 3 -->
-                <div
-                    class="group flex-shrink-0 w-56 relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-green-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Avatar 3"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-gradient-to-r from-green-600 to-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                COMING SOON
-                            </div>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-green-900/90 to-transparent p-4">
-                            <div class="text-white font-bold text-lg">10 Mar</div>
-                            <div class="text-gray-300 text-sm">2024</div>
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-green-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-green-300 transition-colors duration-300">
-                            Avatar 3
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-3">Action, Adventure, Fantasy</p>
-
-                        <div class="flex items-center text-gray-500 text-sm mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>97 hari lagi</span>
-                        </div>
-
-                        <button
-                            class="w-full py-2.5 px-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-green-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-lg hover:shadow-green-900/30">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
-                                Ingatkan Saya
-                            </div>
-                        </button>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-green-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
-
-                <!-- Coming Soon Card 4 -->
-                <div
-                    class="group flex-shrink-0 w-56 relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-yellow-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Spider-Man: Across the Spider-Verse 2"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-gradient-to-r from-yellow-600 to-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                COMING SOON
-                            </div>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-yellow-900/90 to-transparent p-4">
-                            <div class="text-white font-bold text-lg">5 Apr</div>
-                            <div class="text-gray-300 text-sm">2024</div>
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-yellow-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-yellow-300 transition-colors duration-300">
-                            Spider-Man: Across the Spider-Verse 2
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-3">Animation, Action, Adventure</p>
-
-                        <div class="flex items-center text-gray-500 text-sm mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>123 hari lagi</span>
-                        </div>
-
-                        <button
-                            class="w-full py-2.5 px-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-yellow-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-lg hover:shadow-yellow-900/30">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
-                                Ingatkan Saya
-                            </div>
-                        </button>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-yellow-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
-
-                <!-- Coming Soon Card 5 -->
-                <div
-                    class="group flex-shrink-0 w-56 relative overflow-hidden rounded-xl bg-gray-900 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-900/30">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Fantastic Beasts 4"
-                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                        <div
-                            class="absolute top-4 left-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mr-1.5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                COMING SOON
-                            </div>
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-purple-900/90 to-transparent p-4">
-                            <div class="text-white font-bold text-lg">15 Mei</div>
-                            <div class="text-gray-300 text-sm">2024</div>
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-purple-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    </div>
-
-                    <div class="p-5">
-                        <h3
-                            class="font-bold text-lg mb-2 text-white group-hover:text-purple-300 transition-colors duration-300">
-                            Fantastic Beasts 4
-                        </h3>
-                        <p class="text-gray-400 text-sm mb-3">Adventure, Family, Fantasy</p>
-
-                        <div class="flex items-center text-gray-500 text-sm mb-4">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>163 hari lagi</span>
-                        </div>
-
-                        <button
-                            class="w-full py-2.5 px-4 bg-gray-800 text-gray-300 rounded-lg hover:bg-purple-600 hover:text-white transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-900/30">
-                            <div class="flex items-center justify-center">
-                                <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover:scale-110"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
-                                Ingatkan Saya
-                            </div>
-                        </button>
-                    </div>
-
-                    <div
-                        class="absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-purple-500/30 transition-all duration-500 pointer-events-none">
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
 
     <!-- PROMO SECTION -->
-    <section class="py-16 bg-gradient-to-r from-red-900 to-red-800">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Diskon 50% Tiket Bioskop</h2>
-                    <p class="text-xl mb-6 text-red-100">Setiap hari Senin - Kamis untuk semua film</p>
-                    <p class="text-red-200 mb-8">Promo berlaku untuk semua bioskop partner TIXCLONE. Pesan sekarang sebelum
-                        kehabisan!</p>
-                    <a href="#"
-                        class="inline-block px-8 py-3 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105">Lihat
-                        Promo</a>
-                </div>
+    @if ($activePromo)
+        <section class="py-16 bg-gradient-to-r from-red-900 to-red-800">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h2 class="text-4xl md:text-5xl font-bold mb-4">{{ $activePromo->title }}</h2>
+                        <p class="text-xl mb-6 text-red-100">{{ $activePromo->description }}</p>
+                        <p class="text-red-200 mb-8">Berlaku hingga {{ $activePromo->valid_until->format('d M Y') }}</p>
+                        <a href="{{ route('promo') }}"
+                            class="inline-block px-8 py-3 bg-white text-red-600 font-bold rounded-lg hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105">Lihat
+                            Promo</a>
+                    </div>
 
-                <div class="md:w-2/5">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                        <div class="text-center mb-6">
-                            <div class="text-6xl font-bold text-white mb-2">50%</div>
-                            <div class="text-white text-xl">DISCOUNT</div>
-                        </div>
+                    <div class="md:w-2/5">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                            <div class="text-center mb-6">
+                                <div class="text-6xl font-bold text-white mb-2">{{ $activePromo->discount_percentage }}%
+                                </div>
+                                <div class="text-white text-xl">DISCOUNT</div>
+                            </div>
 
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center border-b border-white/20 pb-2">
-                                <span class="text-white">Kode Promo</span>
-                                <span class="font-bold text-white">TIX50OFF</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/20 pb-2">
-                                <span class="text-white">Berlaku Hingga</span>
-                                <span class="font-bold text-white">31 Des 2023</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-white">Kuota</span>
-                                <span class="font-bold text-white">1.000 tiket/hari</span>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center border-b border-white/20 pb-2">
+                                    <span class="text-white">Kode Promo</span>
+                                    <span class="font-bold text-white">{{ $activePromo->promo_code }}</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-white/20 pb-2">
+                                    <span class="text-white">Berlaku Hingga</span>
+                                    <span
+                                        class="font-bold text-white">{{ $activePromo->valid_until->format('d M Y') }}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-white">Kuota</span>
+                                    <span class="font-bold text-white">
+                                        {{ $activePromo->usage_limit ? $activePromo->usage_limit - $activePromo->used_count . ' tersisa' : 'Unlimited' }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <!-- CINEMA INFO SECTION -->
     <section class="py-12 bg-gray-900">
@@ -752,112 +321,44 @@
             <h2 class="text-3xl font-bold mb-8">Bioskop Partner</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Cinema 1 -->
-                <div
-                    class="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-red-600 transition-colors duration-300">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mr-4">
-                            <span class="text-white font-bold text-xl">XXI</span>
+                @foreach ($cinemas as $cinema)
+                    <div
+                        class="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-red-600 transition-colors duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-xl">{{ substr($cinema->name, 0, 2) }}</span>
+                            </div>
+                            <h3 class="text-xl font-bold">{{ $cinema->name }}</h3>
                         </div>
-                        <h3 class="text-xl font-bold">XXI Plaza Indonesia</h3>
-                    </div>
 
-                    <div class="mb-4">
-                        <div class="flex items-center text-gray-400 mb-2">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>Jakarta Pusat</span>
+                        <div class="mb-4">
+                            <div class="flex items-center text-gray-400 mb-2">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>{{ $cinema->location }}</span>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span>{{ $cinema->studio_count }} Studio</span>
+                            </div>
                         </div>
-                        <div class="flex items-center text-gray-400">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>12 Studio</span>
-                        </div>
-                    </div>
 
-                    <div class="text-sm text-gray-300">
-                        <span class="font-semibold text-red-500">Fasilitas:</span> Dolby Atmos, IMAX, 4DX, Food Court
-                    </div>
-                </div>
-
-                <!-- Cinema 2 -->
-                <div
-                    class="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-red-600 transition-colors duration-300">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                            <span class="text-white font-bold text-xl">CGV</span>
-                        </div>
-                        <h3 class="text-xl font-bold">CGV Grand Indonesia</h3>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="flex items-center text-gray-400 mb-2">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>Jakarta Pusat</span>
-                        </div>
-                        <div class="flex items-center text-gray-400">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>10 Studio</span>
+                        <div class="text-sm text-gray-300">
+                            <span class="font-semibold text-red-500">Fasilitas:</span> {{ $cinema->facilities }}
                         </div>
                     </div>
-
-                    <div class="text-sm text-gray-300">
-                        <span class="font-semibold text-red-500">Fasilitas:</span> ScreenX, Gold Class, SweetBox, Starbucks
-                    </div>
-                </div>
-
-                <!-- Cinema 3 -->
-                <div
-                    class="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-red-600 transition-colors duration-300">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
-                            <span class="text-white font-bold text-xl">CIN</span>
-                        </div>
-                        <h3 class="text-xl font-bold">Cinema 31 BSD City</h3>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="flex items-center text-gray-400 mb-2">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>Tangerang Selatan</span>
-                        </div>
-                        <div class="flex items-center text-gray-400">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span>8 Studio</span>
-                        </div>
-                    </div>
-
-                    <div class="text-sm text-gray-300">
-                        <span class="font-semibold text-red-500">Fasilitas:</span> Velvet Class, 3D Digital, Cafe,
-                        Playground
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <div class="text-center mt-8">
-                <a href="#"
+                <a href="{{ route('cinemas') }}"
                     class="inline-block px-6 py-3 border-2 border-red-600 text-red-600 font-semibold rounded-lg hover:bg-red-600 hover:text-white transition-colors duration-300">Lihat
                     Semua Bioskop</a>
             </div>
