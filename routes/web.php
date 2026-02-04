@@ -8,6 +8,8 @@ use App\Http\Controllers\Guest\CinemaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\HomeContentController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -218,6 +220,7 @@ Route::middleware(['auth', 'admin'])
             Route::delete('/{event}', [AdminEventController::class, 'destroy'])->name('destroy');
         });
 
+        // route kategori
         Route::prefix('categories')->name('categories.')->group(function () {
             Route::get('/', [CategoryController::class, 'index'])->name('index');
             Route::get('/create', [CategoryController::class, 'create'])->name('create');
@@ -225,6 +228,27 @@ Route::middleware(['auth', 'admin'])
             Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
             Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
             Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        // route promo
+        Route::prefix('promos')->name('promos.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\PromoController::class, 'index'])->name('index');
+            Route::get('/create', [App\Http\Controllers\Admin\PromoController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\PromoController::class, 'store'])->name('store');
+            Route::get('/{promo}/edit', [App\Http\Controllers\Admin\PromoController::class, 'edit'])->name('edit');
+            Route::put('/{promo}', [App\Http\Controllers\Admin\PromoController::class, 'update'])->name('update');
+            Route::put('/{promo}/toggle-status', [App\Http\Controllers\Admin\PromoController::class, 'toggleStatus'])->name('toggle-status');
+            Route::delete('/{promo}', [App\Http\Controllers\Admin\PromoController::class, 'destroy'])->name('destroy');
+        });
+
+        // route bookings
+        Route::prefix('bookings')->name('bookings.')->group(function () {
+            Route::get('/', [BookingController::class, 'index'])->name('index');
+            Route::get('/statistics', [BookingController::class, 'statistics'])->name('statistics');
+            Route::get('/export', [BookingController::class, 'export'])->name('export');
+            Route::get('/{booking}', [BookingController::class, 'show'])->name('show');
+            Route::put('/{booking}/status', [BookingController::class, 'updateStatus'])->name('update-status');
+            Route::delete('/{booking}', [BookingController::class, 'destroy'])->name('destroy');
         });
 
         // KEEP EXISTING ADMIN ROUTES
@@ -260,9 +284,20 @@ Route::middleware(['auth', 'admin'])
             return view('admin.orders.index');
         })->name('orders.index');
 
-        Route::get('/users', function () {
-            return view('admin.users.index');
-        })->name('users.index');
+        //Route::get('/users', function () {
+        //    return view('admin.users.index');
+        //})->name('users.index');
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/create', [UserController::class, 'create'])->name('create');
+            Route::post('/', [UserController::class, 'store'])->name('store');
+            Route::get('/{user}', [UserController::class, 'show'])->name('show');
+            Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+            Route::put('/{user}', [UserController::class, 'update'])->name('update');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+            Route::put('/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggle-status');
+            Route::put('/{user}/verify-email', [UserController::class, 'verifyEmail'])->name('verify-email');
+        });
     });
 
 /*

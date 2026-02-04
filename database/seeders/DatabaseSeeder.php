@@ -140,5 +140,55 @@ class DatabaseSeeder extends Seeder
         foreach ($categories as $category) {
             Category::create($category);
         }
+
+        // Promo Seeder
+        $promos = [
+            [
+                'title' => 'Diskon 50% Tiket Bioskop',
+                'short_description' => 'Diskon spesial setiap hari Senin - Kamis',
+                'description' => 'Dapatkan diskon 50% untuk semua tiket bioskop setiap hari Senin sampai Kamis. Berlaku untuk semua film dan semua studio.',
+                'promo_code' => 'DISKON50',
+                'type' => 'percentage',
+                'discount_value' => 50,
+                'valid_from' => now(),
+                'valid_until' => now()->addMonths(3),
+                'usage_limit' => 1000,
+                'used_count' => 245,
+                'min_purchase' => 50000,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'Potongan Rp 20.000',
+                'short_description' => 'Potongan langsung untuk pembelian minimal Rp 100.000',
+                'description' => 'Dapatkan potongan harga langsung Rp 20.000 untuk pembelian minimal Rp 100.000.',
+                'promo_code' => 'HEMAT20K',
+                'type' => 'fixed_amount',
+                'discount_value' => 20000,
+                'valid_from' => now(),
+                'valid_until' => now()->addMonth(),
+                'usage_limit' => 500,
+                'used_count' => 189,
+                'min_purchase' => 100000,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'Buy 1 Get 1',
+                'short_description' => 'Beli 1 tiket dapat 1 tiket gratis',
+                'description' => 'Promo spesial untuk film tertentu. Beli 1 tiket dapat 1 tiket gratis untuk film yang sama.',
+                'promo_code' => 'B1G1',
+                'type' => 'buy_one_get_one',
+                'discount_value' => 1,
+                'valid_from' => now(),
+                'valid_until' => now()->addDays(15),
+                'usage_limit' => 200,
+                'used_count' => 56,
+                'min_purchase' => null,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($promos as $promo) {
+            Promo::create($promo);
+        }
     }
 }

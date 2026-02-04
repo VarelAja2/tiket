@@ -31,11 +31,11 @@
                 </a>
 
                 <!-- Promo Management -->
-                <a href="{{ route('admin.promos.index') }}"
+                <!-- <a href=""
                     class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg {{ request()->routeIs('admin.promos.*') ? 'bg-gray-800 text-white' : '' }}">
                     <i class="fas fa-percent mr-3"></i>
                     <span>Promo</span>
-                </a>
+                </a>-->
 
                 <!-- Cinema Management -->
                 <a href="{{ route('admin.cinemas.index') }}"
