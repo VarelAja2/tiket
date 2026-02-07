@@ -61,12 +61,6 @@
             </form>
         </div>
 
-        @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -116,8 +110,8 @@
                                 {{ $event->category->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $event->event_date->format('d M Y') }}<br>
-                                <span class="text-gray-500">{{ $event->event_time }}</span>
+                                {{ $event->event_date ? $event->event_date->format('d M Y') : '-' }} <span
+                                    class="text-gray-500">{{ $event->event_time }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">

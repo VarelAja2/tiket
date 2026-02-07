@@ -73,6 +73,11 @@ class Event extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function organizer()
+    {
+        return $this->belongsTo(EventOrganizer::class);
+    }
+
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'event_genre');
