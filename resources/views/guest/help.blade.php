@@ -7,7 +7,7 @@
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Pusat Bantuan</h1>
                 <p class="text-gray-300 text-lg max-w-2xl mx-auto">Dapatkan bantuan untuk masalah yang Anda hadapi saat
-                    menggunakan TIXCLONE</p>
+                    menggunakan BPIX</p>
             </div>
 
             <!-- Help Categories -->
@@ -126,7 +126,7 @@
                         <ul class="space-y-2 text-gray-300 text-sm">
                             <li>• Cek folder spam/promosi</li>
                             <li>• Verifikasi email yang digunakan</li>
-                            <li>• Cek di akun TIXCLONE > My Tickets</li>
+                            <li>• Cek di akun BPIX > My Tickets</li>
                             <li>• Hubungi customer service</li>
                         </ul>
                     </div>
@@ -222,7 +222,7 @@
                             <path
                                 d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                         </svg>
-                        Telepon Sekarang
+                        Chat Sekarang
                     </a>
                     <a href="{{ route('contact') }}"
                         class="px-6 py-3 border-2 border-red-600 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors flex items-center justify-center">
@@ -300,7 +300,7 @@
                 <div class="space-y-4">
                     <p class="text-gray-300">Untuk mengelola akun Anda:</p>
                     <ul class="list-disc pl-5 space-y-2 text-gray-300">
-                        <li>Login ke akun TIXCLONE Anda</li>
+                        <li>Login ke akun Anda</li>
                         <li>Klik profil di pojok kanan atas</li>
                         <li>Pilih "My Profile" untuk edit data pribadi</li>
                         <li>Pilih "My Tickets" untuk lihat riwayat tiket</li>
@@ -313,7 +313,7 @@
             <div class="p-6">
                 <h3 class="text-2xl font-bold mb-4">Panduan Cepat</h3>
                 <div class="space-y-4">
-                    <p class="text-gray-300">Tips cepat menggunakan TIXCLONE:</p>
+                    <p class="text-gray-300">Tips cepat menggunakan BPIX:</p>
                     <div class="bg-red-600/10 border border-red-600/30 rounded-lg p-4">
                         <h4 class="font-bold text-red-500 mb-2">💡 Tips 1: Pesan Lebih Awal</h4>
                         <p class="text-gray-300">Pesan tiket minimal 1 hari sebelumnya untuk mendapatkan kursi terbaik</p>
