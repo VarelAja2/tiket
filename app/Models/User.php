@@ -27,7 +27,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // Helper methods
+    // ===== HELPER =====
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
