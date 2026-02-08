@@ -7,8 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-        'order_code','user_id','ticket_id',
-        'qty','total_price','status','paid_at'
+        'order_code',
+        'user_id',
+
+        // data pembeli
+        'buyer_name',
+        'buyer_phone',
+        'buyer_email',
+
+        // relasi
+        'event_id',
+
+        // transaksi
+        'qty',
+        'price',
+        'total_price',
+        'payment_method',
+        'status',
+        'paid_at',
     ];
 
     public function user()
@@ -16,8 +32,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function ticket()
+    public function event()
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->belongsTo(Event::class);
     }
 }

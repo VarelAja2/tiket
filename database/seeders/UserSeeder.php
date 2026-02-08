@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'user@example.com'],
+            ['email' => 'user@klient.com'],
             [
                 'name'     => 'User',
                 'password' => Hash::make('user123'),

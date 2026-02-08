@@ -11,20 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
-    $table->id();
-    $table->string('order_code')->unique();
-    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-    $table->foreignId('ticket_id')->constrained()->cascadeOnDelete();
-    $table->integer('qty');
-    $table->integer('total_price');
-    $table->enum('status', ['pending','paid','failed','expired'])->default('pending');
-    $table->timestamp('paid_at')->nullable();
-    $table->timestamps();
+     Schema::table('orders', function (Blueprint $table) {
+    $table->string('buyer_name')->after('user_id');
+    $table->string('buyer_phone')->after('buyer_name');
+    $table->string('buyer_email')->after('buyer_phone');
+
+    $table->foreignId('event_id')->after('buyer_email')->constrained()->cascadeOnDelete();
+
+    $table->integer('qty')->change();
+    $table->decimal('price', 12, 2)->after('qty');
+    $table->enum('payment_method', ['dana', 'gopay', 'ovo'])->after('price');
+
+    $table->enum('status', ['pending', 'paid', 'cancelled'])->default('pending')->change();
 });
 
     }
-
     /**
      * Reverse the migrations.
      */
