@@ -4,31 +4,43 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration {
     public function up(): void
     {
-     Schema::table('orders', function (Blueprint $table) {
-    $table->string('buyer_name')->after('user_id');
-    $table->string('buyer_phone')->after('buyer_name');
-    $table->string('buyer_email')->after('buyer_phone');
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
 
-    $table->foreignId('event_id')->after('buyer_email')->constrained()->cascadeOnDelete();
+            $table->string('order_code')->unique();
 
-    $table->integer('qty')->change();
-    $table->decimal('price', 12, 2)->after('qty');
-    $table->enum('payment_method', ['dana', 'gopay', 'ovo'])->after('price');
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained()
+                  ->nullOnDelete();
 
-    $table->enum('status', ['pending', 'paid', 'cancelled'])->default('pending')->change();
-});
+            // DATA PEMBELI (BUY TICKET)
+            $table->string('buyer_name');
+            $table->string('buyer_email');
+            $table->string('buyer_phone');
 
+            $table->foreignId('ticket_id')
+                  ->constrained()
+                  ->cascadeOnDelete();
+
+            $table->integer('qty');
+            $table->decimal('total_price', 12, 2);
+
+            $table->enum('payment_method', ['dana', 'gopay', 'ovo'])
+                  ->nullable();
+
+            $table->enum('status', ['pending', 'paid', 'cancelled'])
+                  ->default('pending');
+
+            $table->timestamp('paid_at')->nullable();
+
+            $table->timestamps();
+        });
     }
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('orders');

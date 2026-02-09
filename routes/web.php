@@ -307,6 +307,13 @@ Route::middleware(['auth', 'admin'])
 */
 
 Route::middleware('auth')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Booking Flow (TETAP)
+    |--------------------------------------------------------------------------
+    */
+
     // Seat Selection
     Route::get('/booking/{showtime_id}/seats', function ($showtime_id) {
         return view('booking.seats');
@@ -317,21 +324,49 @@ Route::middleware('auth')->group(function () {
         return view('booking.confirm');
     })->name('booking.confirm');
 
-    // Order Processing
-    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    /*
+    |--------------------------------------------------------------------------
+    | Order Flow (BARU)
+    |--------------------------------------------------------------------------
+    */
 
-    // Payment
-    Route::get('/order/{id}/pay', [OrderController::class, 'pay'])->name('order.pay');
+    // Simpan order
+    Route::post('/order', [OrderController::class, 'store'])
+        ->name('order.store');
 
-    // Order Status Pages
-    Route::get('/order/{id}/pending', fn($id) => view('order.pending'))->name('order.pending');
-    Route::get('/order/{id}/success', fn($id) => view('order.success'))->name('order.success');
-    Route::get('/order/{id}/failed', fn($id) => view('order.failed'))->name('order.failed');
+    // 🔥 HALAMAN KETERANGAN / RINGKASAN TIKET
+    Route::get('/order/{id}/summary', [OrderController::class, 'summary'])
+        ->name('order.summary');
 
-    // Order History
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    // Simulasi pembayaran
+    Route::post('/order/{id}/pay', [OrderController::class, 'pay'])
+        ->name('order.pay');
+
+    // Pending
+    Route::get('/order/{id}/pending', fn ($id) => view('order.pending'))
+        ->name('order.pending');
+
+    // 🔥 SUCCESS WAJIB LEWAT CONTROLLER
+    Route::get('/order/{id}/success', [OrderController::class, 'success'])
+        ->name('order.success');
+
+    // Failed
+    Route::get('/order/{id}/failed', fn ($id) => view('order.failed'))
+        ->name('order.failed');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order History (TETAP)
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/orders', [OrderController::class, 'index'])
+        ->name('orders.index');
+
+    Route::get('/orders/{id}', [OrderController::class, 'show'])
+        ->name('orders.show');
 });
+
 
 /*
 |--------------------------------------------------------------------------

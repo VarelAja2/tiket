@@ -157,8 +157,9 @@
                         <i class="fas fa-home mr-2"></i>
                         Beranda
                     </a>
-                    <a href="{{ route('now-playing') }}"
-                        class="hover:text-red-500 transition-colors duration-300 flex items-center">
+                    <a href="{{ route('now-playing') }}">Buy Ticket</a>
+
+                     <i class="hover:text-red-500 transition-colors duration-300 flex items-center">
                         <i class="fas fa-film mr-2"></i>
                         Buy Ticket
                     </a>
